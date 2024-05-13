@@ -8,23 +8,35 @@ const totalItems = 10000 // 总列表项数量
 const itemHeight = 60 // 每个列表项的高度
 const buffer = 2 // 缓冲区大小
 let scrollTop = 0 // 初始化滚动位置
+const itemsCache = {}; // 用于缓存列表项的容器
 
 // 初始渲染时设置一个合适的高度以确保滚动条存在
 container.style.height = `${Math.min(buffer * itemHeight * 3 + itemHeight, totalItems * itemHeight)}px`
+
+function createItem(i) {
+    if (itemsCache[i]) {
+        // 如果列表项已存在于缓存中，直接返回它
+        return itemsCache[i]
+    }
+    // 否则创建一个新的列表项并添加到缓存中
+    const item = document.createElement('div')
+    item.className = 'item'
+    item.style.top = `${i * itemHeight}px`
+    item.textContent = `Item ${i + 1}`
+    itemsCache[i] = item
+    return item
+}
 
 function renderVirtualList(scrollTop) {
     const startIndex = Math.max(0, Math.floor(scrollTop / itemHeight) - buffer)
     const endIndex = Math.min(totalItems, startIndex + Math.ceil(container.offsetHeight / itemHeight) + buffer * 2)
     
-    container.innerHTML = ''
-    
+    const fragment = document.createDocumentFragment()
     for (let i = startIndex; i < endIndex; i++) {
-        const item = document.createElement('div')
-        item.className = 'item'
-        item.style.top = `${i * itemHeight}px`
-        item.textContent = `Item ${i + 1}`
-        container.appendChild(item)
+        fragment.appendChild(createItem(i))
     }
+    container.innerHTML = ''
+    container.appendChild(fragment)
 }
 
 // 防抖函数
@@ -46,10 +58,3 @@ container.addEventListener('scroll', debounce(() => {
 
 // 首次渲染虚拟列表
 renderVirtualList(scrollTop)
-
-// 确保在页面加载完成后调整容器高度为实际高度，但不再更新minHeight
-window.addEventListener('load', () => {
-    requestAnimationFrame(() => {
-        // 这里不再更新minHeight，因为我们希望保持滚动条的存在
-    })
-})
