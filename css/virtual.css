@@ -1,0 +1,77 @@
+body {
+    font-family: 'Roboto', sans-serif;
+    background-color: #212121;
+    color: #e0e0e0;
+    margin: 0;
+    padding: 0;
+}
+#container {
+    overflow-y: auto; /* 允许纵向滚动 */
+    overflow-x: hidden;
+    position: relative;
+    width: 400px;
+    max-width: 100%;
+    margin: 20px auto;
+    background-color: #303030;
+    padding: 10px;
+    box-sizing: border-box;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+
+    /* Webkit 浏览器的滚动条样式 */
+    &::-webkit-scrollbar {
+        width: 6px; /* 宽度 */
+    }
+    &::-webkit-scrollbar-thumb {
+        background: rgba(255, 255, 255, 0.2); /* 滚动条部分的颜色 */
+        border-radius: 3px; /* 圆角 */
+    }
+    &::-webkit-scrollbar-thumb:hover {
+        background: rgba(255, 255, 255, 0.4); /* 滚动条部分悬停时的颜色 */
+    }
+}
+.item {
+    position: absolute;
+    width: 100%;
+    height: 50px; /* 增加高度以适应图标 */
+    line-height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 15px; /* 添加内边距以便更好地显示文字和图标 */
+    overflow: hidden;
+    border-radius: 10px; /* 增大圆角以更显柔和 */
+    background: linear-gradient(to right, #3a3a3a, #4b4b4b); /* 渐变背景 */
+    transition: all 0.3s ease-in-out;
+    cursor: pointer;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* 添加阴影效果 */
+}
+.item:hover {
+    background: linear-gradient(to right, #4b4b4b, #3a3a3a); /* 鼠标悬停时背景渐变方向变化 */
+}
+.item:before {
+    content: "";
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    margin-right: 10px;
+    background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg%20aria-hidden%3D%22true%22%20focusable%3D%22false%22%20data-prefix%3D%22fas%22%20data-icon%3D%22angle-double-left%22%20class%3D%22svg-inline--fa%20fa-angle-double-left%20fa-w-14%22%20role%3D%22img%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20448%20512%22%3E%3Cpath%20fill%3D%22currentColor%22%20d%3D%22M224.3%20273l-136%20136c-9.4%209.4-24.6%209.4-33.9%200l-104-104c-9.4-9.4-9.4-24.6%200-33.9l22.6-22.6c9.4-9.4%2024.6-9.4%2033.9%200L104%20413.7l151.8-151.8c9.4-9.4%2024.6-9.4%2033.9%200l22.6%2022.6c9.4%209.4%209.4%2024.6%200%2033.9z%20M0%20304c0%2013.3%2010.7%2024%2024%2024h352c13.3%200%2024-10.7%2024-24V160H24c-13.3%200-24%2010.7-24%2024v144zm120-64h112c4.4%200%208-3.6%208-8V168c0-4.4-3.6-8-8-8H288c-4.4%200-8%203.6-8%208v64c0%204.4%203.6%208%208%208z%22%3E%3C%2Fpath%3E%3C%2Fsvg%3E");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+}
+
+.item > span {
+    color: #e0e0e0;
+    font-size: 18px; /* 增大字体大小 */
+    font-weight: 500;
+    letter-spacing: 0.5px; /* 字间距微调 */
+}
+.item > span:last-child { /* 假设第二个span是副文本 */
+    color: #fff; /* 更改副文本颜色以突出 */
+    font-size: 14px;
+    font-weight: 400;
+}
+.item:nth-child(even) {
+    background: linear-gradient(to left, #3a3a3a, #4b4b4b); /* 偶数项渐变方向相反 */
+}
