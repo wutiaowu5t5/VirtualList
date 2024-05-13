@@ -1,0 +1,80 @@
+* {
+    box-sizing: border-box; /* 添加box-sizing */
+}
+
+/* 通用重置 */
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed,
+figure, figcaption, footer, header, hgroup,
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    font: inherit;
+    vertical-align: baseline;
+}
+
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure,
+footer, header, hgroup, menu, nav, section {
+    display: block;
+}
+
+/* HTML5 hidden-attribute fix for newer browsers */
+*[hidden] {
+    display: none;
+}
+
+/* 图像、对象、输入类型图像不显示边框 */
+img, object, input[type="image"] {
+    border: 0;
+}
+
+/* 列表项标记清除 */
+ul, ol {
+    list-style: none;
+}
+
+/* 表单元素重置 */
+button, input, select, textarea {
+    font-family: inherit; /* 1 */
+    font-size: 100%; /* 1 */
+    line-height: 1.15; /* 1 */
+    margin: 0; /* 2 */
+}
+
+/* 改变表单元素的字体大小以匹配其父元素 */
+button, select {
+    text-transform: none;
+}
+
+/* 防止调整按钮尺寸 */
+button, html [type="button"], [type="reset"], [type="submit"] {
+    -webkit-appearance: button;
+}
+
+/* 移除按钮默认的内边距 */
+button::-moz-focus-inner, [type="button"]::-moz-focus-inner, [type="reset"]::-moz-focus-inner, [type="submit"]::-moz-focus-inner {
+    padding: 0;
+    border-style: none;
+}
+
+/* 让所有元素更容易被点击（特别是移动设备） */
+*, *::before, *::after {
+    touch-action: manipulation;
+}
+
+/* 可选：为表格元素添加基本样式 */
+table {
+    border-collapse: collapse;
+    border-spacing: 0;
+}
