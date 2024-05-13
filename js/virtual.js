@@ -14,47 +14,66 @@ const itemsCache = {}; // 用于缓存列表项的容器
 container.style.height = `${Math.min(buffer * itemHeight * 3 + itemHeight, totalItems * itemHeight)}px`
 
 function createItem(i) {
-    if (itemsCache[i]) {
-        // 如果列表项已存在于缓存中，直接返回它
-        return itemsCache[i]
+    if (!itemsCache[i]) {
+        // 创建一个新的列表项并添加到缓存中
+        const item = document.createElement('div')
+        item.className = 'item'
+        item.style.top = `${i * itemHeight}px`
+        item.textContent = `Item ${i + 1}`
+        itemsCache[i] = item
     }
-    // 否则创建一个新的列表项并添加到缓存中
-    const item = document.createElement('div')
-    item.className = 'item'
-    item.style.top = `${i * itemHeight}px`
-    item.textContent = `Item ${i + 1}`
-    itemsCache[i] = item
-    return item
+    return itemsCache[i]
 }
 
 function renderVirtualList(scrollTop) {
     const startIndex = Math.max(0, Math.floor(scrollTop / itemHeight) - buffer)
     const endIndex = Math.min(totalItems, startIndex + Math.ceil(container.offsetHeight / itemHeight) + buffer * 2)
+    const newFragment = document.createDocumentFragment()
     
-    const fragment = document.createDocumentFragment()
     for (let i = startIndex; i < endIndex; i++) {
-        fragment.appendChild(createItem(i))
+        newFragment.appendChild(createItem(i))
     }
-    container.innerHTML = ''
-    container.appendChild(fragment)
+    
+    //更新DOM前，移除已有的子元素
+    [...container.childNodes].forEach(child => {
+        const index = parseInt(child.style.top) / itemHeight
+        if (index < startIndex || index >= endIndex) {
+            container.removeChild(child)
+        }
+    })
+    
+    container.appendChild(newFragment)
 }
 
-// 防抖函数
 function debounce(func, delay) {
     let timeoutId
     return function(...args) {
         if (timeoutId) {
             clearTimeout(timeoutId)
         }
-        timeoutId = setTimeout(() => func.apply(this, args), delay)
+        timeoutId = setTimeout(() => {
+            func.apply(this, args)
+        }, delay)
     }
 }
 
-// 监听滚动事件
-container.addEventListener('scroll', debounce(() => {
+function throttle(func, limit) {
+    let inThrottle
+    return function() {
+        const args = arguments
+        const context = this
+        if (!inThrottle) {
+            func.apply(context, args)
+            inThrottle = true
+            setTimeout(() => (inThrottle = false), limit)
+        }
+    }
+}
+
+container.addEventListener('scroll', throttle(debounce(() => {
     scrollTop = container.scrollTop
     requestAnimationFrame(() => renderVirtualList(scrollTop))
-}, 30))
+}, 30), 100))
 
 // 首次渲染虚拟列表
 renderVirtualList(scrollTop)
