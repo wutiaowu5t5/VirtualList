@@ -9,7 +9,7 @@ body {
     overflow-y: auto; /* 允许纵向滚动 */
     overflow-x: hidden;
     position: relative;
-    width: 400px;
+    width: 410px;
     max-width: 100%;
     margin: 20px auto;
     background-color: #303030;
@@ -32,7 +32,7 @@ body {
 }
 .item {
     position: absolute;
-    width: 100%;
+    width: 380px;
     height: 50px; /* 增加高度以适应图标 */
     line-height: 50px;
     display: flex;
@@ -45,6 +45,7 @@ body {
     transition: all 0.3s ease-in-out;
     cursor: pointer;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* 添加阴影效果 */
+    margin-bottom: 10px;
 }
 .item:hover {
     background: linear-gradient(to right, #4b4b4b, #3a3a3a); /* 鼠标悬停时背景渐变方向变化 */
